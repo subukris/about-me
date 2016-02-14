@@ -1,0 +1,17 @@
+{
+	"name": "subuapi",
+	"version": "1.0.0",
+	"description": "A nodejs app to host my api on Bluemix",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"express": "4.12.x",
+		"cfenv": "1.0.x",
+		"body-parser":"*"
+	},
+	"repository": {},
+	"engines": {
+		"node": "0.12.x"
+	} 
+}
