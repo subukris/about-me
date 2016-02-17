@@ -87,8 +87,7 @@
 
 
     ],
-    "photos": [],
+    "photos": [ {"url": "https://subuapi.mybluemix.net/images/Me-Map.png", "title": "A picture is worth few hundred words"} ],
 
-    "email": "zzzzz",
-    "accessToken": "zzzzzzz"
+    "email": "zzzzzzzz"
 }
