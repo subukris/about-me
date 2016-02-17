@@ -13,8 +13,6 @@ var bodyParser = require('body-parser');
 var userinfo = require('./config/user.json');
 var credentials = require('./config/creds.json');
 
-//var sendgrid = require('sendgrid')(credentials.sendgrid.username, credentials.sendgrid.password);
-var sendgrid = require('sendgrid')("zBZi6UezfX", "NIYtUDn2XC3j5825");
 
 var http_host = (process.env.VCAP_APP_HOST || '0.0.0.0');
 var http_port = (process.env.VCAP_APP_PORT || 7000);
@@ -28,7 +26,10 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.json());
 
-var USER_ACCESS_TOKEN = userinfo.accessToken;
+//console.log(JSON.stringify(credentials.sendgrid));
+var sendgrid = require('sendgrid')(credentials.sendgrid.username, credentials.sendgrid.password);
+
+var USER_ACCESS_TOKEN = credentials.accessToken;
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -65,11 +66,12 @@ function _validateInput(body) {
 
 app.post('/v1/messages', function(req, res) {
     if (_validateInput(req.body)) {
+	//console.log("body:" + JSON.stringify(req.body));
         sendgrid.send({
             to: userinfo.email,
-            from: 'noreply@subuapi.mybluemix.net',
+            from: req.body.sender,
             subject: 'Message from API user',
-            text: req.body
+            text: req.body.body
         }, function(err, obj) {
             if (err) {
                 console.error(err);
